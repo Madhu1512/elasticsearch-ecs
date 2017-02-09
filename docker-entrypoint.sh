@@ -41,8 +41,8 @@ do
 done < <(env)
 
 if [ -f /sys/hypervisor/uuid ] && [ `head -c 3 /sys/hypervisor/uuid` == ec2 ]; then
-  AWS_PRIVATE_IP=$(wget -qO- http://52.70.13.4/latest/meta-data/local-ipv4)
-  AWS_PRIVATE_HOSTNAME=$(wget -qO- http://52.70.13.4/latest/meta-data/local-hostname)
+  AWS_PRIVATE_IP=$(wget -qO- http://169.254.169.254/latest/meta-data/local-ipv4)
+  AWS_PRIVATE_HOSTNAME=$(wget -qO- http://169.254.169.254/latest/meta-data/local-hostname)
   set -- "$@" ${es_opts} -Enetwork.publish_host=$AWS_PRIVATE_IP -Enode.name=$AWS_PRIVATE_HOSTNAME -Enetwork.host=$AWS_PRIVATE_IP
 else
   set -- "$@" ${es_opts}
